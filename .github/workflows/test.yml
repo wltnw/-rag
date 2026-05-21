@@ -14,7 +14,14 @@ jobs:
           python-version: '3.11'
       
       - name: Install dependencies
-        run: pip install -r requirements_test.txt
+        run: |
+          pip install -r requirements_test.txt
+          pip install fastapi uvicorn langchain_openai langchain_chroma pydantic
+      
+      - name: Start API server
+        run: |
+          python run_server.py &
+          sleep 30
       
       - name: Run tests
         run: pytest --html=report.html --self-contained-html
